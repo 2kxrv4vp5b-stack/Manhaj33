@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منهج دورة القرآن الكريم</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8C97A;
+    --dark: #0D1B1E;
+    --darker: #081215;
+    --green: #2D6A4F;
+    --green-light: #40916C;
+    --cream: #F5EDD6;
+    --cream-light: #FAF5E9;
+    --text: #2C1810;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--darker);
+    color: var(--cream);
+    font-family: 'Tajawal', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(201,168,76,0.06) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(45,106,79,0.08) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A84C' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* NAV TABS */
+  .nav-tabs {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,18,21,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    padding: 0;
+  }
+
+  .tab-btn {
+    flex: 1;
+    max-width: 200px;
+    padding: 14px 10px;
+    background: transparent;
+    border: none;
+    color: rgba(245,237,214,0.45);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.25s;
+    position: relative;
+  }
+
+  .tab-btn:hover { color: var(--gold-light); }
+
+  .tab-btn.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+    background: rgba(201,168,76,0.05);
+  }
+
+  .tab-num {
+    display: inline-block;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    line-height: 22px;
+    text-align: center;
+    margin-left: 6px;
+    background: rgba(201,168,76,0.15);
+    color: var(--gold);
+  }
+
+  /* PAGES */
+  .page {
+    display: none;
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 16px 60px;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .page.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 30px 0 24px;
+    position: relative;
+  }
+
+  .header::after {
+    content: '';
+    display: block;
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 18px auto 0;
+  }
+
+  .bismillah {
+    font-family: 'Amiri', serif;
+    font-size: 1.5rem;
+    color: var(--gold-light);
+    letter-spacing: 2px;
+    margin-bottom: 14px;
+    opacity: 0.9;
+  }
+
+  .header h1 {
+    font-family: 'Amiri', serif;
+    font-size: clamp(1.6rem, 5vw, 2.5rem);
+    color: var(--gold);
+    line-height: 1.4;
+    text-shadow: 0 2px 20px rgba(201,168,76,0.3);
+  }
+
+  .header-sub {
+    font-size: 0.9rem;
+    color: rgba(245,237,214,0.55);
+    margin-top: 10px;
+    letter-spacing: 1px;
+  }
+
+  .badges {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+  }
+
+  .badge {
+    background: rgba(201,168,76,0.12);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold-light);
+    font-size: 0.78rem;
+    padding: 3px 12px;
+    border-radius: 20px;
+  }
+
+  /* PAGE TITLE */
+  .page-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+    padding: 16px 20px;
+    border-radius: 14px;
+  }
+
+  .page-title.p1 { background: linear-gradient(135deg, rgba(45,106,79,0.35), rgba(45,106,79,0.12)); border: 1px solid rgba(45,106,79,0.3); }
+  .page-title.p2 { background: linear-gradient(135deg, rgba(201,168,76,0.25), rgba(201,168,76,0.08)); border: 1px solid rgba(201,168,76,0.25); }
+  .page-title.p3 { background: linear-gradient(135deg, rgba(139,90,43,0.35), rgba(139,90,43,0.12)); border: 1px solid rgba(139,90,43,0.25); }
+
+  .page-num {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Amiri', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .p1 .page-num { background: var(--green); color: var(--cream); }
+  .p2 .page-num { background: var(--gold); color: var(--darker); }
+  .p3 .page-num { background: #8B5A2B; color: var(--cream); }
+
+  .page-title-text h2 { font-size: 1.15rem; font-weight: 700; color: var(--cream); }
+  .page-title-text p { font-size: 0.78rem; color: rgba(245,237,214,0.5); margin-top: 3px; }
+
+  /* SECTION DIVIDER */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 22px 0 14px;
+  }
+
+  .section-divider span {
+    font-size: 0.72rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.35), transparent);
+  }
+
+  /* CONTENT CARD */
+  .content-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-right: 3px solid var(--gold);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+  }
+
+  .content-card.green-border { border-right-color: var(--green-light); }
+  .content-card.brown-border { border-right-color: #8B5A2B; }
+
+  .card-label {
+    font-size: 0.68rem;
+    color: var(--gold);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .card-label.green { color: #7BC4A0; }
+  .card-label.brown { color: #D4A574; }
+
+  .card-title {
+    font-family: 'Amiri', serif;
+    font-size: 1.1rem;
+    color: var(--cream);
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+
+  .card-verse {
+    font-family: 'Amiri', serif;
+    font-size: 1.05rem;
+    color: var(--gold-light);
+    line-height: 2.2;
+    background: rgba(201,168,76,0.06);
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin: 8px 0;
+    text-align: center;
+  }
+
+  .card-body {
+    font-size: 0.82rem;
+    color: rgba(245,237,214,0.72);
+    line-height: 1.8;
+    margin-top: 8px;
+  }
+
+  .hadith-box {
+    background: rgba(45,106,79,0.12);
+    border: 1px solid rgba(45,106,79,0.2);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin: 8px 0;
+    font-size: 0.85rem;
+    color: #A8D5BC;
+    font-family: 'Amiri', serif;
+    line-height: 1.9;
+  }
+
+  .hadith-box::before {
+    content: '«';
+    font-size: 1.2rem;
+    color: var(--green-light);
+  }
+
+  .hadith-box::after {
+    content: '»';
+    font-size: 1.2rem;
+    color: var(--green-light);
+  }
+
+  .benefits-list {
+    list-style: none;
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .benefits-list li {
+    font-size: 0.8rem;
+    color: rgba(245,237,214,0.65);
+    padding-right: 18px;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .benefits-list li::before {
+    content: '◈';
+    position: absolute;
+    right: 0;
+    color: var(--gold);
+    font-size: 0.6rem;
+    top: 3px;
+  }
+
+  /* TAGS */
+  .tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .tag {
+    font-size: 0.74rem;
+    padding: 3px 11px;
+    border-radius: 6px;
+  }
+
+  .tag-gold { background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.25); color: rgba(245,237,214,0.8); }
+  .tag-green { background: rgba(45,106,79,0.15); border: 1px solid rgba(45,106,79,0.35); color: #7BC4A0; }
+  .tag-brown { background: rgba(139,90,43,0.15); border: 1px solid rgba(139,90,43,0.3); color: #D4A574; }
+
+  /* TIPS BOX */
+  .tips-box {
+    background: rgba(45,106,79,0.08);
+    border: 1px solid rgba(45,106,79,0.22);
+    border-radius: 12px;
+    padding: 15px 18px;
+    margin: 18px 0;
+  }
+
+  .tips-title {
+    color: #7BC4A0;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .tips-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .tips-list li {
+    font-size: 0.78rem;
+    color: rgba(245,237,214,0.6);
+    padding-right: 16px;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .tips-list li::before {
+    content: '◈';
+    position: absolute;
+    right: 0;
+    color: var(--green-light);
+    font-size: 0.6rem;
+    top: 3px;
+  }
+
+  /* VERSE BOX */
+  .verse-box {
+    text-align: center;
+    padding: 18px;
+    margin: 18px 0;
+    background: rgba(201,168,76,0.05);
+    border-radius: 12px;
+    border: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .verse-text {
+    font-family: 'Amiri', serif;
+    font-size: 1.1rem;
+    color: var(--gold-light);
+    line-height: 2;
+  }
+
+  .verse-ref {
+    font-size: 0.72rem;
+    color: rgba(245,237,214,0.38);
+    margin-top: 8px;
+  }
+
+  /* GOALS GRID */
+  .goals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin: 20px 0;
+  }
+
+  .goal-card {
+    background: rgba(201,168,76,0.07);
+    border: 1px solid rgba(201,168,76,0.18);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+  }
+
+  .goal-icon { font-size: 1.6rem; margin-bottom: 6px; }
+  .goal-title { font-size: 0.82rem; color: var(--gold-light); font-weight: 600; }
+  .goal-desc { font-size: 0.72rem; color: rgba(245,237,214,0.48); margin-top: 3px; }
+
+  /* SUMMARY GRID */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 18px 0;
+  }
+
+  .summary-cell {
+    text-align: center;
+    padding: 14px 8px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.12);
+  }
+
+  .summary-num {
+    font-family: 'Amiri', serif;
+    font-size: 1.7rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .summary-label {
+    font-size: 0.68rem;
+    color: rgba(245,237,214,0.48);
+    margin-top: 4px;
+  }
+
+  /* TWO COLS */
+  .two-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 12px 0;
+  }
+
+  @media (max-width: 520px) {
+    .two-cols { grid-template-columns: 1fr; }
+    .tab-btn { font-size: 0.75rem; padding: 12px 6px; }
+    .tab-num { display: none; }
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    margin-top: 36px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(201,168,76,0.15);
+  }
+
+  .footer p {
+    font-size: 0.8rem;
+    color: rgba(245,237,214,0.32);
+    font-family: 'Amiri', serif;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV TABS -->
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="showPage(1, this)">
+    <span class="tab-num">١</span> المقدمة والمنهج
+  </button>
+  <button class="tab-btn" onclick="showPage(2, this)">
+    <span class="tab-num">٢</span> الآيات والأذكار
+  </button>
+  <button class="tab-btn" onclick="showPage(3, this)">
+    <span class="tab-num">٣</span> الأدعية النبوية
+  </button>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!--  PAGE 1 — المقدمة والمنهج                         -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="page active" id="page1">
+  <div class="header">
+    <div class="bismillah">بسم الله الرحمن الرحيم</div>
+    <h1>منهج دورة القرآن الكريم<br>للمبتدئين</h1>
+    <p class="header-sub">حفظ السور والأذكار النبوية الشريفة</p>
+    <div class="badges">
+      <span class="badge">٣ أشهر</span>
+      <span class="badge">حفظ + أذكار</span>
+      <span class="badge">مستوى مبتدئ</span>
+    </div>
+  </div>
+
+  <div class="verse-box">
+    <div class="verse-text">﴿ إِنَّ هَٰذَا الْقُرْآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ ﴾</div>
+    <div class="verse-ref">سورة الإسراء — الآية ٩</div>
+  </div>
+
+  <div class="section-divider"><span>أهداف الدورة</span></div>
+  <div class="goals-grid">
+    <div class="goal-card"><div class="goal-icon">📖</div><div class="goal-title">حفظ السور</div><div class="goal-desc">المعوذات وآيات البقرة</div></div>
+    <div class="goal-card"><div class="goal-icon">🌙</div><div class="goal-title">أذكار الصباح والمساء</div><div class="goal-desc">الأذكار اليومية الثابتة</div></div>
+    <div class="goal-card"><div class="goal-icon">🤲</div><div class="goal-title">الأدعية النبوية</div><div class="goal-desc">أدعية الهم والاستغفار</div></div>
+    <div class="goal-card"><div class="goal-icon">⭐</div><div class="goal-title">فضائل الآيات</div><div class="goal-desc">فهم معنى وثواب ما يُحفظ</div></div>
+  </div>
+
+  <div class="summary-grid">
+    <div class="summary-cell"><div class="summary-num">١٢</div><div class="summary-label">أسبوع دراسي</div></div>
+    <div class="summary-cell"><div class="summary-num">٦</div><div class="summary-label">سور وآيات محفوظة</div></div>
+    <div class="summary-cell"><div class="summary-num">١٢+</div><div class="summary-label">ذكر ودعاء نبوي</div></div>
+  </div>
+
+  <!-- MONTH 1 -->
+  <div class="section-divider"><span>الشهر الأول — المعوذات</span></div>
+
+  <div class="content-card">
+    <div class="card-label">الأسبوع الأول</div>
+    <div class="card-title">سورة الإخلاص</div>
+    <div class="card-verse">﴿قُلْ هُوَ اللَّهُ أَحَدٌ ۝ اللَّهُ الصَّمَدُ ۝ لَمْ يَلِدْ وَلَمْ يُولَدْ ۝ وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ﴾</div>
+    <div class="card-body">
+      <strong style="color:var(--gold-light)">فضلها:</strong>
+      <div class="hadith-box">إنها تعدل ثلث القرآن</div>
+      <ul class="benefits-list">
+        <li>توحيد الله وتعظيمه</li>
+        <li>أجر عظيم لمن يقرأها</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <div class="card-label">الأسبوع الثاني</div>
+    <div class="card-title">سورة الفلق</div>
+    <div class="card-verse">﴿قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ ۝ مِن شَرِّ مَا خَلَقَ ۝ وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ ۝ وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ۝ وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ﴾</div>
+    <div class="card-body">
+      <ul class="benefits-list">
+        <li>حماية من السحر والحسد والشرور</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <div class="card-label">الأسبوع الثالث</div>
+    <div class="card-title">سورة الناس</div>
+    <div class="card-verse">﴿قُلْ أَعُوذُ بِرَبِّ النَّاسِ ۝ مَلِكِ النَّاسِ ۝ إِلَٰهِ النَّاسِ ۝ مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ۝ الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ ۝ مِنَ الْجِنَّةِ وَالنَّاسِ﴾</div>
+    <div class="card-body">
+      <ul class="benefits-list">
+        <li>الحفظ من الوسواس والشيطان</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="content-card green-border">
+    <div class="card-label green">كيف كان النبي ﷺ يقرأ المعوذات؟</div>
+    <div class="card-body">
+      عن عبد الله بن خبيب قال: قال رسول الله ﷺ:
+      <div class="hadith-box">اقرأ قل هو الله أحد والمعوذتين حين تمسي وحين تصبح ثلاث مرات تكفيك من كل شيء</div>
+      <ul class="benefits-list">
+        <li>يقرأها صباحًا ومساءً</li>
+        <li>ويقرأها قبل النوم</li>
+        <li>وينفث في يديه ويمسح بهما جسده</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- MONTH 2 outline -->
+  <div class="section-divider"><span>الشهر الثاني — خلاصة</span></div>
+
+  <div class="content-card">
+    <div class="card-label">الأسبوعان الخامس والسادس</div>
+    <div class="card-title">آية الكرسي — أعظم آية في القرآن</div>
+    <div class="tags-row">
+      <span class="tag tag-green">فضلها: سبب دخول الجنة بعد كل صلاة</span>
+      <span class="tag tag-gold">التفصيل في الصفحة الثانية</span>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <div class="card-label">الأسبوعان السابع والثامن</div>
+    <div class="card-title">آخر آيتي سورة البقرة</div>
+    <div class="tags-row">
+      <span class="tag tag-green">فضلهما: من قرأهما في ليلة كفتاه</span>
+      <span class="tag tag-gold">التفصيل في الصفحة الثانية</span>
+    </div>
+  </div>
+
+  <div class="tips-box">
+    <div class="tips-title">📌 إرشادات عامة للدورة</div>
+    <ul class="tips-list">
+      <li>اقرأ كل سورة ١٠ مرات قبل الشروع في الحفظ</li>
+      <li>استمع لتلاوة مشايخ موثوقين للتصحيح</li>
+      <li>خصص ١٥ دقيقة صباحًا للمراجعة اليومية</li>
+      <li>ربط الأذكار بأوقاتها: الصباح، المساء، قبل النوم</li>
+      <li>اكتب ما تحفظه بخطك لتثبيت الحفظ</li>
+      <li>شارك ما تعلمته مع أهلك لتعميم الفائدة</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <p>﴿ وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا ﴾</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════ -->
+<!--  PAGE 2 — الآيات الكاملة والأذكار اليومية         -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="page" id="page2">
+
+  <div class="page-title p2">
+    <div class="page-num">٢</div>
+    <div class="page-title-text">
+      <h2>الآيات المباركة والأذكار اليومية</h2>
+      <p>النص الكامل مع الفضائل والأحاديث النبوية</p>
+    </div>
+  </div>
+
+  <!-- آية الكرسي -->
+  <div class="section-divider"><span>آية الكرسي</span></div>
+
+  <div class="content-card">
+    <div class="card-label">سورة البقرة — الآية ٢٥٥</div>
+    <div class="card-verse">﴿اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ﴾</div>
+    <div class="card-body">
+      <strong style="color:var(--gold-light)">فضلها من السنة:</strong>
+      <div class="hadith-box">من قرأ آية الكرسي دبر كل صلاة مكتوبة لم يمنعه من دخول الجنة إلا أن يموت</div>
+    </div>
+  </div>
+
+  <!-- آخر آيتي البقرة -->
+  <div class="section-divider"><span>آخر آيتَي سورة البقرة</span></div>
+
+  <div class="content-card">
+    <div class="card-label">الآية ٢٨٥</div>
+    <div class="card-verse">﴿آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ لَا نُفَرِّقُ بَيْنَ أَحَدٍ مِن رُّسُلِهِ ۚ وَقَالُوا سَمِعْنَا وَأَطَعْنَا ۖ غُفْرَانَكَ رَبَّنَا وَإِلَيْكَ الْمَصِيرُ﴾</div>
+  </div>
+
+  <div class="content-card">
+    <div class="card-label">الآية ٢٨٦</div>
+    <div class="card-verse">﴿لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا ۚ لَهَا مَا كَسَبَتْ وَعَلَيْهَا مَا اكْتَسَبَتْ ۗ رَبَّنَا لَا تُؤَاخِذْنَا إِن نَّسِينَا أَوْ أَخْطَأْنَا ۚ رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِن قَبْلِنَا ۚ رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ ۖ وَاعْفُ عَنَّا وَاغْفِرْ لَنَا وَارْحَمْنَا ۚ أَنتَ مَوْلَانَا فَانصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ﴾</div>
+    <div class="card-body">
+      <strong style="color:var(--gold-light)">فضلهما من السنة:</strong>
+      <div class="hadith-box">من قرأ بالآيتين من آخر سورة البقرة في ليلة كفتاه</div>
+      <strong style="color:var(--gold-light); font-size:0.8rem;">معنى "كفتاه" — قال العلماء:</strong>
+      <ul class="benefits-list">
+        <li>تكفيه من الشرور والشيطان</li>
+        <li>تكفيه في قيام الليل إن لم يقم</li>
+        <li>تحفظه بإذن الله</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- أذكار الصباح والمساء -->
+  <div class="section-divider"><span>أذكار الصباح والمساء</span></div>
+
+  <div class="two-cols">
+    <div class="content-card green-border">
+      <div class="card-label green">ذكر الصباح</div>
+      <div class="card-verse" style="font-size:0.9rem;">«اللهم بك أصبحنا، وبك أمسينا، وبك نحيا، وبك نموت، وإليك النشور»</div>
+    </div>
+    <div class="content-card green-border">
+      <div class="card-label green">ذكر المساء</div>
+      <div class="card-verse" style="font-size:0.9rem;">«اللهم بك أمسينا، وبك أصبحنا، وبك نحيا، وبك نموت، وإليك المصير»</div>
+    </div>
+  </div>
+
+  <div class="content-card green-border">
+    <div class="card-label green">فضل هذا الذكر ومعناه</div>
+    <div class="card-body">رواه أبو هريرة عن النبي ﷺ، وفيه:
+      <ul class="benefits-list">
+        <li>تفويض الأمر لله والتوكل عليه في الحياة والموت</li>
+        <li>تذكير بالبعث والنشور</li>
+        <li>يبعث الطمأنينة في القلب</li>
+        <li>يقوي الإيمان ويذكّر المسلم بالآخرة كل يوم</li>
+        <li>الحفظ بإذن الله والبركة والسكينة</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="two-cols">
+    <div class="content-card green-border">
+      <div class="card-label green">دعاء الصباح</div>
+      <div class="card-verse" style="font-size:0.88rem;">«أصبحنا على فطرة الإسلام، وكلمة الإخلاص، ودين نبينا محمد ﷺ، وملة أبينا إبراهيم حنيفًا مسلمًا وما كان من المشركين»</div>
+    </div>
+    <div class="content-card green-border">
+      <div class="card-label green">دعاء المساء</div>
+      <div class="card-verse" style="font-size:0.88rem;">«أمسينا على فطرة الإسلام، وكلمة الإخلاص، ودين نبينا محمد ﷺ، وملة أبينا إبراهيم حنيفًا مسلمًا وما كان من المشركين»</div>
+    </div>
+  </div>
+
+  <!-- أذكار متنوعة -->
+  <div class="section-divider"><span>أذكار متنوعة ثابتة</span></div>
+
+  <div class="content-card">
+    <div class="card-label">ذكر الحفظ — ٣ مرات</div>
+    <div class="card-verse" style="font-size:0.95rem;">«بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم»</div>
+    <div class="card-body">
+      <div class="hadith-box">لم يضره شيء</div>
+      <ul class="benefits-list"><li>حفظ من البلاء والمصائب بإذن الله</li></ul>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <div class="card-label">ذكر الرضا بالله — ٣ مرات</div>
+    <div class="card-verse" style="font-size:0.95rem;">«رضيت بالله ربًا، وبالإسلام دينًا، وبمحمد ﷺ نبيًا ورسولًا»</div>
+    <div class="card-body">
+      <div class="hadith-box">كان حقًا على الله أن يرضيه يوم القيامة</div>
+      <ul class="benefits-list">
+        <li>طمأنينة القلب</li>
+        <li>رضا الله عن العبد</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <div class="card-label">حسبي الله — ٧ مرات</div>
+    <div class="card-verse" style="font-size:0.95rem;">«حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم»</div>
+    <div class="card-body">
+      <div class="hadith-box">كفاه الله ما أهمه</div>
+      <ul class="benefits-list">
+        <li>تفريج الهم والكرب</li>
+        <li>تقوية التوكل على الله</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <div class="card-label">لا إله إلا الله — ١٠٠ مرة</div>
+    <div class="card-verse" style="font-size:0.95rem;">«لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير»</div>
+    <div class="card-body">
+      <strong style="color:var(--gold-light)">فضلها:</strong>
+      <ul class="benefits-list">
+        <li>عدل عشر رقاب</li>
+        <li>مئة حسنة</li>
+        <li>محو مئة سيئة</li>
+        <li>حرز من الشيطان يومه ذلك</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <div class="card-label">الذكر الجامع</div>
+    <div class="card-verse" style="font-size:0.95rem;">«سبحان الله وبحمده، عددَ خلقه، ورضا نفسه، وزنةَ عرشه، ومدادَ كلماته»</div>
+    <div class="card-body">
+      عن جويرية بنت الحارث أن النبي ﷺ خرج من عندها صباحًا ثم رجع بعد الضحى وهي تذكر الله، فقال ﷺ:
+      <div class="hadith-box">لقد قلتُ بعدك أربع كلمات ثلاث مرات، لو وُزنت بما قلتِ منذ اليوم لوزنتهن: سبحان الله وبحمده، عدد خلقه، ورضا نفسه، وزنة عرشه، ومداد كلماته</div>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <div class="card-label">لا حول ولا قوة — كنز من الجنة</div>
+    <div class="card-verse" style="font-size:0.95rem;">«لا حول ولا قوة إلا بالله العلي العظيم»</div>
+    <div class="card-body">
+      قال النبي ﷺ لأبي موسى الأشعري:
+      <div class="hadith-box">ألا أدلك على كنزٍ من كنوز الجنة؟ لا حول ولا قوة إلا بالله</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>اللهم اجعل القرآن ربيع قلوبنا ونور صدورنا</p>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════ -->
+<!--  PAGE 3 — الأدعية النبوية والتوجيهات الدينية      -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="page" id="page3">
+
+  <div class="page-title p3">
+    <div class="page-num">٣</div>
+    <div class="page-title-text">
+      <h2>الأدعية النبوية والتوجيهات الدينية</h2>
+      <p>سيد الاستغفار، دعاء الهم، الصلاة على النبي ﷺ</p>
+    </div>
+  </div>
+
+  <!-- سيد الاستغفار -->
+  <div class="section-divider"><span>سيد الاستغفار</span></div>
+
+  <div class="content-card brown-border">
+    <div class="card-label brown">ذكر الصباح والمساء</div>
+    <div class="card-verse">«اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بنعمتك عليّ، وأبوء بذنبي فاغفر لي فإنه لا يغفر الذنوب إلا أنت»</div>
+    <div class="card-body">
+      <strong style="color:var(--gold-light)">فضله العظيم:</strong>
+      <div class="hadith-box">من قالها موقنًا بها حين يمسي فمات من ليلته دخل الجنة، ومن قالها حين يصبح فمات من يومه دخل الجنة</div>
+      <ul class="benefits-list">
+        <li>مغفرة الذنوب</li>
+        <li>سبب لدخول الجنة</li>
+        <li>تجديد التوبة يوميًا</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- دعاء الهم والحزن -->
+  <div class="section-divider"><span>دعاء الهم والحزن</span></div>
+
+  <div class="content-card brown-border">
+    <div class="card-label brown">الدعاء الجامع</div>
+    <div class="card-verse">«اللهم إني عبدُك، ابنُ عبدِك، ابنُ أَمَتِك، ناصيتي بيدك، ماضٍ فيَّ حكمُك، عدلٌ فيَّ قضاؤك، أسألك بكل اسمٍ هو لك، سميتَ به نفسك، أو أنزلتَه في كتابك، أو علَّمتَه أحدًا من خلقك، أو استأثرتَ به في علم الغيب عندك، أن تجعل القرآن ربيع قلبي، ونور صدري، وجلاء حزني، وذهاب همي»</div>
+    <div class="card-body">
+      <div class="hadith-box">ما أصاب أحدًا قط همٌّ ولا حزن فقاله إلا أذهب الله همَّه وحزنه وأبدله مكانه فرحًا</div>
+    </div>
+  </div>
+
+  <!-- دعاء ذي النون -->
+  <div class="section-divider"><span>دعاء ذي النون عليه السلام</span></div>
+
+  <div class="content-card brown-border">
+    <div class="card-label brown">دعاء يونس بن متى في بطن الحوت</div>
+    <div class="card-verse">«لا إله إلا أنت سبحانك إني كنتُ من الظالمين»</div>
+    <div class="card-body">
+      <div class="hadith-box">دعوةُ ذي النون إذ دعا بها وهو في بطن الحوت: لا إله إلا أنت سبحانك إني كنت من الظالمين، فإنه لم يدعُ بها رجل مسلم في شيء قط إلا استجاب الله له</div>
+    </div>
+  </div>
+
+  <!-- دعاء الكرب -->
+  <div class="section-divider"><span>دعاء الكرب</span></div>
+
+  <div class="content-card brown-border">
+    <div class="card-label brown">دعاء النبي ﷺ عند الكرب</div>
+    <div class="card-verse">«يا حي يا قيوم، برحمتك أستغيث، أصلح لي شأني كله، ولا تكلني إلى نفسي طرفة عين»</div>
+    <div class="card-body">رُوي عن أنس بن مالك أن النبي ﷺ كان إذا كربه أمر قاله أو أكثر منه</div>
+  </div>
+
+  <!-- دعاء الاستغفار -->
+  <div class="section-divider"><span>الاستغفار العظيم</span></div>
+
+  <div class="content-card brown-border">
+    <div class="card-label brown">صيغة الاستغفار الكاملة</div>
+    <div class="card-verse">«أستغفرُ اللهَ العظيمَ الذي لا إله إلا هو الحيَّ القيومَ وأتوبُ إليه»</div>
+    <div class="card-body">
+      <div class="hadith-box">من قال: أستغفر الله العظيم الذي لا إله إلا هو الحي القيوم وأتوب إليه؛ غُفِر له وإن كان فرّ من الزحف</div>
+    </div>
+  </div>
+
+  <!-- الصلاة على النبي -->
+  <div class="section-divider"><span>الصلاة على النبي ﷺ</span></div>
+
+  <div class="content-card green-border">
+    <div class="card-label green">الصلاة الإبراهيمية الكاملة</div>
+    <div class="card-verse">«اللهم صلِّ على محمدٍ وعلى آل محمد، كما صليتَ على إبراهيم وعلى آل إبراهيم، إنك حميدٌ مجيد، وبارك على محمدٍ وعلى آل محمد، كما باركتَ على إبراهيم وعلى آل إبراهيم، إنك حميدٌ مجيد»</div>
+    <div class="card-body">
+      <strong style="color:var(--gold-light)">فضلها:</strong>
+      <div class="hadith-box">من صلى عليَّ صلاةً صلى الله عليه بها عشرًا</div>
+      <div class="hadith-box">إنَّ أَولى الناس بي يوم القيامة أكثرهم عليَّ صلاة</div>
+    </div>
+  </div>
+
+  <!-- التوجيهات الدينية -->
+  <div class="section-divider"><span>توجيهات دينية مهمة</span></div>
+
+  <div class="content-card">
+    <div class="card-label">فضل الصلاة وخطورة تركها</div>
+    <div class="card-body">
+      <div class="hadith-box">إنَّ العهدَ الذي بيننا وبينهم الصلاةُ، فمن تركها فقد كفر</div>
+      <strong style="color:var(--gold-light); font-size:0.8rem; display:block; margin-top:8px;">معنى الحديث:</strong>
+      <ul class="benefits-list">
+        <li>العهد الذي بيننا وبينهم: أي العلامة الفاصلة بين المسلم وغيره</li>
+        <li>الصلاة أعظم شعائر الإسلام الظاهرة بعد الشهادتين</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="content-card">
+    <div class="card-label">التحذير من النميمة</div>
+    <div class="card-body">
+      <div class="hadith-box">لا يدخل الجنة نمّام</div>
+      <div class="hadith-box">لا يدخل الجنة قتّات</div>
+      <strong style="color:var(--gold-light); font-size:0.8rem; display:block; margin-top:8px;">معنى النميمة:</strong>
+      <ul class="benefits-list">
+        <li>نقل الكلام بين الناس بقصد الإفساد وإشعال المشاكل</li>
+        <li>مثل: نقل كلام شخص لآخر لإيقاع العداوة بينهم</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ملخص الدورة الكامل -->
+  <div class="section-divider"><span>ملخص المحفوظات الكامل</span></div>
+
+  <div style="background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.15); border-radius: 14px; padding: 18px; margin: 14px 0;">
+    <div class="two-cols">
+      <div>
+        <div style="color: var(--gold); font-size: 0.8rem; margin-bottom: 8px; font-weight: 600;">📖 السور المحفوظة</div>
+        <ul class="benefits-list">
+          <li>سورة الإخلاص</li>
+          <li>سورة الفلق</li>
+          <li>سورة الناس</li>
+          <li>آية الكرسي (البقرة:٢٥٥)</li>
+          <li>آخر آيتَي البقرة (٢٨٥-٢٨٦)</li>
+        </ul>
+      </div>
+      <div>
+        <div style="color: #D4A574; font-size: 0.8rem; margin-bottom: 8px; font-weight: 600;">🌙 الأذكار والأدعية</div>
+        <ul class="benefits-list">
+          <li>أذكار الصباح والمساء</li>
+          <li>دعاء الفطرة صباحًا ومساءً</li>
+          <li>سيد الاستغفار</li>
+          <li>دعاء الهم والحزن</li>
+          <li>دعاء ذي النون</li>
+          <li>دعاء الكرب</li>
+          <li>الصلاة الإبراهيمية</li>
+          <li>حسبي الله × ٧</li>
+          <li>لا حول ولا قوة إلا بالله</li>
+          <li>ذكر الحفظ × ٣</li>
+          <li>ذكر الرضا × ٣</li>
+          <li>لا إله إلا الله × ١٠٠</li>
+          <li>سبحان الله وبحمده عدد خلقه</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="tips-box">
+    <div class="tips-title">📌 خطة ما بعد الدورة</div>
+    <ul class="tips-list">
+      <li>خصص يومًا أسبوعيًا للمراجعة الشاملة لجميع المحفوظات</li>
+      <li>اجعل الأذكار عادة راسخة لا تنقطع بانتهاء الدورة</li>
+      <li>ابدأ بحفظ جزء عمّ كاملًا في المرحلة القادمة</li>
+      <li>تعلم أحكام التجويد الأساسية لتحسين التلاوة</li>
+    </ul>
+  </div>
+
+  <div class="footer">
+    <p>﴿ وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا ﴾</p>
+    <p style="margin-top:8px;">اللهم اجعل القرآن ربيع قلوبنا ونور صدورنا وذهاب همنا وحزننا</p>
+  </div>
+</div>
+
+<script>
+function showPage(n, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page' + n).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
